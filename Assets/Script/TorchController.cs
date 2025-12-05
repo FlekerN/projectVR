@@ -6,27 +6,27 @@ public class TorchController : MonoBehaviour
     public XRGrabInteractable Hand;
     public GameObject fire;
     public bool isOnFire = false;
+    public ParticleSystem fireparticle;
 
     private void Awake()
     {
+        fireparticle = fire.GetComponent<ParticleSystem>();
         fire.SetActive(false);
         Hand = GetComponent<XRGrabInteractable>();
-        Hand.selectEntered.AddListener(StarFire);
-        Hand.selectExited.AddListener(StopFire);
+        Hand.activated.AddListener(OnActivated);
+        Hand.deactivated.AddListener(OnDeactivate);
     }
 
-    public void StarFire(SelectEnterEventArgs data) 
+    public void OnActivated(ActivateEventArgs data) 
     {
         isOnFire = true;
         fire.SetActive(true);
-        ParticleSystem fireparticle = fire.GetComponent<ParticleSystem>();
         fireparticle.Play();
     }
-    public void StopFire(SelectExitEventArgs data)
+    public void OnDeactivate(DeactivateEventArgs data)
     {
         isOnFire = false;
         fire.SetActive(false);
-        ParticleSystem fireparticle = fire.GetComponent<ParticleSystem>();
         fireparticle.Stop();
     }
 }
