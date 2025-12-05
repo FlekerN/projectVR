@@ -15,7 +15,6 @@ public class ShotgunController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         Hand = GetComponent<XRGrabInteractable>();
         Hand.activated.AddListener(Disparar);
-        
     }
 
     public void Disparar(ActivateEventArgs data) 
